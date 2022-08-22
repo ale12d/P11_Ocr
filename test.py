@@ -25,5 +25,12 @@ def test_club_point_allowed(client):
     response = client.post(
         "/purchasePlaces", data={'club': 'Iron Temple', 'competition': 'Spring Festival', 'places': 5}
     )
+    assert b"incorrect input" in response.data
+
+#fix 3 / tests
+def test_max_place_competition(client):
+    response = client.post(
+        "/purchasePlaces", data={'club': 'Simply Lift', 'competition': 'Spring Festival', 'places': 13}
+    )
     print(response.data)
     assert b"incorrect input" in response.data
