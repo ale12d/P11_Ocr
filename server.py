@@ -1,5 +1,6 @@
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for
+import datetime
 
 MAX_PLACES_COMPETITION = 12
 
@@ -52,7 +53,9 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     placesAllowed = int(club["points"])
-    if placesAllowed < placesRequired:
+    if datetime.datetime.now() > datetime.datetime.strptime(competition['date'], "%Y-%m-%d %H:%M:%S"):
+        flash("finished competition / cannot take places in past competition")
+    elif placesAllowed < placesRequired:
         flash(f'incorrect input / cannot take more than {club["points"]} places')
     elif placesRequired <= 0:
         flash('incorrect input / places cannot be negative or zero')
