@@ -47,3 +47,10 @@ def test_club_point_sub(client):
         "/purchasePlaces", data={'club': 'Simply Lift', 'competition': 'Spring Festival', 'places': 1}
     )
     assert b"Points available: 12" in response.data
+
+#fix 6 / tests
+def test_clubs_points_display(client):
+    response = client.get(
+        "/showClubsPoints")
+    print(response.data)
+    assert b"<title>Points || GUDLFT" in response.data
